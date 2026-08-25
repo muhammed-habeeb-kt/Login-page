@@ -69,13 +69,13 @@ export default function Landing() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight mb-4">
-            HABILEX
+            Habilex
           </h1>
           <p className="text-lg text-primary font-medium mb-2">
             Secure Face Verification
           </p>
           <p className="text-muted-foreground text-base sm:text-lg max-w-lg mx-auto leading-relaxed mb-8">
-            Protect your Telegram bot from spam and virtual number abuse with
+            Shield your Telegram bot from spam and virtual-number abuse with
             AI-powered face verification. One selfie, one identity, zero spam.
           </p>
 
@@ -100,10 +100,10 @@ export default function Landing() {
             className="text-center mb-12"
           >
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">
-              Why Face Verification?
+              Why Habilex?
             </h2>
             <p className="text-muted-foreground max-w-md mx-auto">
-              Traditional OTPs can be bypassed. Face verification cannot.
+              OTPs alone can be bypassed. Face verification cannot.
             </p>
           </motion.div>
 
@@ -182,7 +182,7 @@ export default function Landing() {
             </h2>
             <p className="text-sm text-muted-foreground mb-6">
               Join the next generation of Telegram bot security. Verify once,
-              stay protected forever.
+              stay protected for good.
             </p>
             <Button size="lg" onClick={() => navigate("/auth")} className="px-8">
               Start Verification
@@ -194,7 +194,7 @@ export default function Landing() {
 
       {/* Footer */}
       <footer className="text-center py-6 text-xs text-muted-foreground border-t border-border/50">
-        habilex
+        Habilex
       </footer>
     </motion.div>
   );

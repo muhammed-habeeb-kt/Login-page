@@ -22,7 +22,7 @@ export default function Dashboard() {
         <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm font-medium text-muted-foreground">
-              HABILEX Security
+              Habilex Security
             </p>
             <h1 className="mt-1 text-3xl font-bold tracking-tight">
               Welcome{user?.name ? `, ${user.name}` : ""}

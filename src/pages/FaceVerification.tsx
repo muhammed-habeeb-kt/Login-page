@@ -103,7 +103,7 @@ export default function FaceVerification() {
         )}
         <div className="flex items-center gap-2 mx-auto">
           <Shield className="size-5 text-primary" />
-          <span className="font-semibold text-sm tracking-wide">HABILEX</span>
+          <span className="font-semibold text-sm tracking-wide">Habilex</span>
         </div>
         {screen !== "credentials" && <div className="w-16" />}
       </header>
@@ -164,7 +164,7 @@ export default function FaceVerification() {
 
       {/* Footer */}
       <footer className="text-center py-3 text-xs text-muted-foreground border-t border-border/50">
-        habilex
+        Habilex
       </footer>
     </div>
   );
@@ -202,7 +202,7 @@ function CredentialsScreen({
 
       <h1 className="text-xl font-bold mb-1">Update Credentials</h1>
       <p className="text-sm text-muted-foreground mb-8 text-center">
-        Set up your secure access for HABILEX face verification
+        Set up your secure access for Habilex face verification
       </p>
 
       <div className="w-full space-y-4">
