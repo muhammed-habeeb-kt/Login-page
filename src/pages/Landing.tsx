@@ -495,35 +495,81 @@ function Screen5({ onDone }: { onDone: () => void }) {
 
       {/* Center Content */}
       <div className="flex-1 flex flex-col items-center px-6">
-        {/* Glowing Shield + Padlock */}
-        <div className="relative w-[140px] h-[150px] shrink-0 mt-2">
-          {/* Glow behind shield */}
-          <div
-            className="absolute inset-0 rounded-full blur-2xl opacity-40"
-            style={{ background: "linear-gradient(135deg, #f97316, #ec4899, #a855f7)" }}
-          />
-          <svg viewBox="0 0 140 150" width="140" height="150" fill="none" className="relative z-10">
-            <defs>
-              <linearGradient id="shield-glow" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#f97316" />
-                <stop offset="50%" stopColor="#ec4899" />
-                <stop offset="100%" stopColor="#a855f7" />
-              </linearGradient>
-            </defs>
-            {/* Shield outline */}
+        {/* 3-Part Header Graphic */}
+        <div className="flex items-center justify-center gap-0 shrink-0 mt-4">
+          {/* ── Left Icon: Chat bubble on stand ── */}
+          <svg width="80" height="110" viewBox="0 0 80 110" fill="none" className="relative -mr-3">
+            {/* Stand */}
+            <line x1="36" y1="72" x2="36" y2="100" stroke="#4a4a4a" strokeWidth="2" />
+            <line x1="44" y1="72" x2="44" y2="100" stroke="#4a4a4a" strokeWidth="2" />
+            {/* Rounded square border */}
+            <rect x="12" y="18" width="56" height="54" rx="10" stroke="#4a4a4a" strokeWidth="2" fill="none" />
+            {/* Chat bubble inside */}
             <path
-              d="M70 10 L120 30 L120 80 C120 110 95 135 70 145 C45 135 20 110 20 80 L20 30 Z"
-              stroke="url(#shield-glow)"
-              strokeWidth="3"
+              d="M26 36 C26 30 32 26 40 26 C48 26 54 30 54 36 C54 42 48 46 40 46 L36 46 L30 52 L32 46 C28 44 26 40 26 36Z"
+              stroke="#5a5a5a"
+              strokeWidth="1.8"
+              fill="none"
+              strokeLinejoin="round"
+            />
+          </svg>
+
+          {/* ── Center: Glowing Shield + Padlock ── */}
+          <div className="relative w-[160px] h-[160px] mx-1">
+            {/* Glow behind shield */}
+            <div
+              className="absolute inset-[-10px] rounded-full blur-[28px] opacity-50"
+              style={{ background: "linear-gradient(160deg, #a855f7 0%, #ec4899 40%, #f97316 100%)" }}
+            />
+            <svg viewBox="0 0 160 160" width="160" height="160" fill="none" className="relative z-10">
+              <defs>
+                <linearGradient id="shield-grad" x1="20%" y1="90%" x2="80%" y2="10%">
+                  <stop offset="0%" stopColor="#f97316" />
+                  <stop offset="30%" stopColor="#ec4899" />
+                  <stop offset="65%" stopColor="#d946ef" />
+                  <stop offset="100%" stopColor="#a855f7" />
+                </linearGradient>
+              </defs>
+              {/* Shield outline */}
+              <path
+                d="M80 12 L135 34 L135 85 C135 118 110 142 80 152 C50 142 25 118 25 85 L25 34 Z"
+                stroke="url(#shield-grad)"
+                strokeWidth="3.5"
+                fill="none"
+              />
+              {/* Padlock body */}
+              <rect x="60" y="86" width="40" height="32" rx="5" stroke="white" strokeWidth="2.8" fill="none" />
+              {/* Padlock shackle */}
+              <path
+                d="M66 86 L66 74 C66 62 70 56 80 56 C90 56 94 62 94 74 L94 86"
+                stroke="white"
+                strokeWidth="2.8"
+                strokeLinecap="round"
+                fill="none"
+              />
+              {/* Keyhole */}
+              <circle cx="80" cy="100" r="3.5" fill="white" />
+              <path d="M80 104 L80 113" stroke="white" strokeWidth="2.2" strokeLinecap="round" />
+            </svg>
+          </div>
+
+          {/* ── Right Icon: Landscape/picture on stand ── */}
+          <svg width="80" height="110" viewBox="0 0 80 110" fill="none" className="relative -ml-3">
+            {/* Stand */}
+            <line x1="36" y1="72" x2="36" y2="100" stroke="#4a4a4a" strokeWidth="2" />
+            <line x1="44" y1="72" x2="44" y2="100" stroke="#4a4a4a" strokeWidth="2" />
+            {/* Circle border */}
+            <circle cx="40" cy="42" r="28" stroke="#4a4a4a" strokeWidth="2" fill="none" />
+            {/* Mountain / landscape icon inside */}
+            <path
+              d="M24 52 L32 38 L38 46 L44 36 L56 52Z"
+              stroke="#5a5a5a"
+              strokeWidth="1.8"
+              strokeLinejoin="round"
               fill="none"
             />
-            {/* Padlock body */}
-            <rect x="52" y="78" width="36" height="28" rx="4" stroke="white" strokeWidth="2.5" fill="none" />
-            {/* Padlock shackle */}
-            <path d="M58 78 L58 68 C58 58 62 54 70 54 C78 54 82 58 82 68 L82 78" stroke="white" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-            {/* Keyhole */}
-            <circle cx="70" cy="90" r="3" fill="white" />
-            <path d="M70 93 L70 100" stroke="white" strokeWidth="2" strokeLinecap="round" />
+            {/* Sun */}
+            <circle cx="32" cy="32" r="4" stroke="#5a5a5a" strokeWidth="1.5" fill="none" />
           </svg>
         </div>
 
