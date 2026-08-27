@@ -72,7 +72,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
             height: 75,
             borderRadius: 16,
             marginTop: 15,
-            marginBottom: 60,
+            marginBottom: 90,
             background: 'linear-gradient(to bottom right, #ff7e5f, #feb47b)',
           }}
         />
