@@ -47,15 +47,21 @@ function Screen1({ onNext }: { onNext: () => void }) {
 
   return (
     <>
-      <div className="flex flex-col px-6 pt-20">
+      <div className="flex flex-col items-center px-6" style={{ paddingTop: '12vh' }}>
         {/* Logo Placeholder */}
-        <div className="flex justify-center mb-8">
-          <div className="w-[80px] h-[80px] rounded-[20px]" style={{ background: "linear-gradient(135deg, #f97316, #ec4899, #a855f7)" }} />
-        </div>
+        <div
+          className="mb-10 shrink-0"
+          style={{
+            width: 75,
+            height: 75,
+            borderRadius: 18,
+            background: 'linear-gradient(135deg, #f97316, #ec4899, #a855f7)',
+          }}
+        />
 
         {/* Input Fields */}
-        <div className="flex flex-col gap-4">
-          <div className="bg-[#2c2c2e] rounded-2xl h-[64px] flex items-center px-5">
+        <div className="w-full" style={{ maxWidth: 350 }}>
+          <div className="bg-[#2c2c2e] flex items-center" style={{ height: 52, borderRadius: 6, padding: 16, marginBottom: 14 }}>
             <input
               type="text"
               placeholder="Username"
@@ -64,7 +70,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
               className="w-full bg-transparent text-white text-[16px] outline-none placeholder:text-[#8e8e8e]"
             />
           </div>
-          <div className="bg-[#2c2c2e] rounded-2xl h-[64px] flex items-center px-5">
+          <div className="bg-[#2c2c2e] flex items-center" style={{ height: 52, borderRadius: 6, padding: 16 }}>
             <input
               type="password"
               placeholder="Password"
@@ -76,10 +82,11 @@ function Screen1({ onNext }: { onNext: () => void }) {
         </div>
 
         {/* Next Button */}
-        <div className="mt-5">
+        <div className="w-full" style={{ maxWidth: 350, marginTop: 16 }}>
           <button
             onClick={onNext}
-            className="w-full h-[56px] bg-[#1877f2] hover:bg-[#166fe5] active:bg-[#1565d8] rounded-2xl text-white text-[17px] font-semibold transition-colors"
+            className="w-full bg-[#1877f2] hover:bg-[#166fe5] active:bg-[#1565d8] text-white text-[17px] font-semibold transition-colors"
+            style={{ height: 52, borderRadius: 26 }}
           >
             Next
           </button>
