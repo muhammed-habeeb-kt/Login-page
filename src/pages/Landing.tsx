@@ -63,7 +63,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col items-start px-6" style={{ paddingTop: '10vh' }}>
+      <div className="flex-1 flex flex-col items-center px-6" style={{ paddingTop: '18vh' }}>
         {/* Logo Placeholder */}
         <div
           className="shrink-0"
