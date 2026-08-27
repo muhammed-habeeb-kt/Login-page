@@ -68,9 +68,9 @@ function Screen1({ onNext }: { onNext: () => void }) {
         <div
           className="shrink-0"
           style={{
-            width: 75,
-            height: 75,
-            borderRadius: 16,
+            width: 60,
+            height: 60,
+            borderRadius: 14,
             marginTop: 15,
             marginBottom: 120,
             background: 'linear-gradient(to bottom right, #ff7e5f, #feb47b)',
