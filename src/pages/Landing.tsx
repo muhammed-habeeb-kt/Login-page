@@ -47,13 +47,18 @@ function Screen1({ onNext }: { onNext: () => void }) {
 
   return (
     <>
-      <div className="flex-1 flex flex-col justify-center px-6">
+      <div className="flex flex-col px-6 pt-20">
+        {/* Logo Placeholder */}
+        <div className="flex justify-center mb-8">
+          <div className="w-[80px] h-[80px] rounded-[20px]" style={{ background: "linear-gradient(135deg, #f97316, #ec4899, #a855f7)" }} />
+        </div>
+
         {/* Input Fields */}
         <div className="flex flex-col gap-4">
           <div className="bg-[#2c2c2e] rounded-2xl h-[64px] flex items-center px-5">
             <input
               type="text"
-              placeholder="Username, email address or mobile number"
+              placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="w-full bg-transparent text-white text-[16px] outline-none placeholder:text-[#8e8e8e]"
