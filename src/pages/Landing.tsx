@@ -63,18 +63,15 @@ function Screen1({ onNext }: { onNext: () => void }) {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center px-6" style={{ paddingTop: '18vh' }}>
-        {/* Logo Placeholder */}
-        <div
-          className="shrink-0"
-          style={{
-            width: 80,
-            height: 80,
-            borderRadius: 20,
-            marginBottom: 40,
-            background: 'linear-gradient(135deg, #f97316, #ec4899, #a855f7)',
-          }}
-        />
+      <div className="flex-1 flex flex-col items-center px-6" style={{ paddingTop: '6vh' }}>
+        {/* Logo */}
+        <div className="shrink-0" style={{ marginBottom: 36 }}>
+          <img
+            src="/bird-logo.png"
+            alt="Habilex Logo"
+            style={{ width: 100, height: 100, objectFit: 'contain' }}
+          />
+        </div>
 
         {/* Input Fields */}
         <div className="w-full" style={{ maxWidth: 360 }}>
