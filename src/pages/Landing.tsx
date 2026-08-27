@@ -24,8 +24,8 @@ export default function Landing() {
   const [screen, setScreen] = useState<Screen>(1);
 
   return (
-    <div className="min-h-screen bg-[#1F1F21] flex items-center justify-center">
-      <div className="w-full max-w-[430px] min-h-[932px] bg-[#1F1F21] relative overflow-hidden flex flex-col">
+    <div className="min-h-[100dvh] bg-[#1F1F21] flex items-center justify-center">
+      <div className="w-full max-w-[430px] min-h-[100dvh] bg-[#1F1F21] relative overflow-hidden flex flex-col">
         {screen === 1 && <Screen1 onNext={() => setScreen(2)} />}
         {screen === 2 && (
           <Screen2 onBack={() => setScreen(1)} onNext={() => setScreen(3)} />
@@ -113,7 +113,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
         </div>
 
         {/* Forgotten Password Link */}
-        <div className="mt-4 flex justify-center" style={{ marginBottom: 10 }}>
+        <div className="flex justify-center" style={{ marginTop: 24 }}>
           <button className="text-white text-[15px] font-medium" style={{ fontFamily: FONT }}>
             Forgotten password?
           </button>
