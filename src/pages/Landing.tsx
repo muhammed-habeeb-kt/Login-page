@@ -121,7 +121,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
       </div>
 
       {/* Meta Logo Footer */}
-      <div className="absolute bottom-24 left-0 right-0 flex justify-center items-center gap-1.5">
+      <div className="absolute left-0 right-0 flex justify-center items-center gap-1.5" style={{ bottom: 100 }}>
         {/* Meta infinity loop icon */}
         <svg width="28" height="14" viewBox="0 0 28 14" fill="none">
           <path
