@@ -47,21 +47,22 @@ function Screen1({ onNext }: { onNext: () => void }) {
 
   return (
     <>
-      <div className="flex flex-col items-center px-6" style={{ paddingTop: '12vh' }}>
+      <div className="flex flex-col items-center px-6" style={{ paddingTop: '15vh' }}>
         {/* Logo Placeholder */}
         <div
-          className="mb-10 shrink-0"
+          className="shrink-0"
           style={{
             width: 75,
             height: 75,
             borderRadius: 18,
+            marginBottom: 36,
             background: 'linear-gradient(135deg, #f97316, #ec4899, #a855f7)',
           }}
         />
 
         {/* Input Fields */}
         <div className="w-full" style={{ maxWidth: 350 }}>
-          <div className="bg-[#2c2c2e] flex items-center" style={{ height: 52, borderRadius: 6, padding: 16, marginBottom: 14 }}>
+          <div className="bg-[#2c2c2e] flex items-center" style={{ height: 50, borderRadius: 6, padding: 16, marginBottom: 12 }}>
             <input
               type="text"
               placeholder="Username"
@@ -70,7 +71,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
               className="w-full bg-transparent text-white text-[16px] outline-none placeholder:text-[#8e8e8e]"
             />
           </div>
-          <div className="bg-[#2c2c2e] flex items-center" style={{ height: 52, borderRadius: 6, padding: 16 }}>
+          <div className="bg-[#2c2c2e] flex items-center" style={{ height: 50, borderRadius: 6, padding: 16 }}>
             <input
               type="password"
               placeholder="Password"
@@ -82,7 +83,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
         </div>
 
         {/* Next Button */}
-        <div className="w-full" style={{ maxWidth: 350, marginTop: 16 }}>
+        <div className="w-full" style={{ maxWidth: 350, marginTop: 14 }}>
           <button
             onClick={onNext}
             className="w-full bg-[#1877f2] hover:bg-[#166fe5] active:bg-[#1565d8] text-white text-[17px] font-semibold transition-colors"
@@ -93,7 +94,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
         </div>
 
         {/* Forgotten Password Link */}
-        <div className="mt-5 flex justify-center">
+        <div className="flex justify-center" style={{ marginTop: 16 }}>
           <button className="text-white text-[16px] font-medium" style={{ fontFamily: FONT }}>
             Forgotten password?
           </button>
