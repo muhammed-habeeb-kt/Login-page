@@ -63,7 +63,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center px-6" style={{ paddingTop: '6vh' }}>
+      <div className="flex-1 flex flex-col items-center px-6" style={{ paddingTop: '12vh' }}>
         {/* Logo Placeholder */}
         <div
           className="shrink-0"
@@ -121,7 +121,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
       </div>
 
       {/* Meta Logo Footer */}
-      <div className="absolute bottom-12 left-0 right-0 flex justify-center items-center gap-1.5">
+      <div className="absolute bottom-24 left-0 right-0 flex justify-center items-center gap-1.5">
         {/* Meta infinity loop icon */}
         <svg width="28" height="14" viewBox="0 0 28 14" fill="none">
           <path
