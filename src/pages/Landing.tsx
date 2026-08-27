@@ -120,21 +120,21 @@ function Screen1({ onNext }: { onNext: () => void }) {
         </div>
       </div>
 
-      {/* Bottom Section — Create new account + Meta */}
-      <div className="px-6 pb-4 shrink-0">
-        <div
-          className="w-full flex items-center justify-center"
-          style={{ height: 52, borderRadius: 26, border: '1px solid rgba(0,149,246,0.6)' }}
-        >
-          <span className="text-[#0095f6] text-[15px] font-medium" style={{ fontFamily: FONT }}>
-            Create new account
-          </span>
-        </div>
-        <div className="flex justify-center mt-4 pb-2">
-          <span className="text-[#a8a8a8] text-[14px] font-medium" style={{ fontFamily: FONT }}>
-            Meta
-          </span>
-        </div>
+      {/* Meta Logo Footer */}
+      <div className="absolute bottom-8 left-0 right-0 flex justify-center items-center gap-1.5">
+        {/* Meta infinity loop icon */}
+        <svg width="28" height="14" viewBox="0 0 28 14" fill="none">
+          <path
+            d="M8.5 1C5.46 1 3 3.46 3 6.5C3 9.54 5.46 12 8.5 12C9.5 12 10.42 11.72 11.2 11.24L14 9.5V13H16V1H14V5L11.2 3.24C10.42 2.76 9.5 2.5 8.5 2.5C6.29 2.5 4.5 4.29 4.5 6.5C4.5 8.71 6.29 10.5 8.5 10.5C10.71 10.5 12.5 8.71 12.5 6.5C12.5 4.29 10.71 2.5 8.5 2.5M19.5 1C16.46 1 14 3.46 14 6.5C14 9.54 16.46 12 19.5 12C20.5 12 21.42 11.72 22.2 11.24L25 9.5V13H27V1H25V5L22.2 3.24C21.42 2.76 20.5 2.5 19.5 2.5C17.29 2.5 15.5 4.29 15.5 6.5C15.5 8.71 17.29 10.5 19.5 10.5C21.71 10.5 23.5 8.71 23.5 6.5C23.5 4.29 21.71 2.5 19.5 2.5"
+            stroke="#a8a8a8"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <span className="text-[#a8a8a8] text-[16px] font-bold tracking-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+          Meta
+        </span>
       </div>
     </>
   );
