@@ -113,7 +113,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
         </div>
 
         {/* Forgotten Password Link */}
-        <div className="flex justify-center" style={{ marginTop: 24 }}>
+        <div className="flex justify-center" style={{ marginTop: 80 }}>
           <button className="text-white text-[15px] font-medium" style={{ fontFamily: FONT }}>
             Forgotten password?
           </button>
@@ -121,7 +121,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
       </div>
 
       {/* Meta Logo Footer */}
-      <div className="absolute left-0 right-0 flex justify-center items-center gap-1.5" style={{ bottom: 100 }}>
+      <div className="absolute left-0 right-0 flex justify-center items-center gap-1.5" style={{ bottom: 20 }}>
         {/* Meta infinity loop icon */}
         <svg width="28" height="14" viewBox="0 0 28 14" fill="none">
           <path
