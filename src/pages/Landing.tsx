@@ -63,7 +63,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center px-6" style={{ paddingTop: '7vh' }}>
+      <div className="flex-1 flex flex-col items-center px-4" style={{ paddingTop: '7vh' }}>
         {/* Logo Placeholder */}
         <img
           src="https://static.cdninstagram.com/rsrc.php/y4/r/xOP_FkbMZmy.webp"
@@ -80,7 +80,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
         />
 
         {/* Input Fields */}
-        <div className="w-full" style={{ maxWidth: 350 }}>
+        <div className="w-full" style={{ maxWidth: 390 }}>
           <div className="bg-transparent flex items-center" style={{ height: 65, borderRadius: 10, padding: '0 16px', marginBottom: 12, border: '1px solid rgba(255,255,255,0.15)' }}>
             <input
               type="text"
@@ -104,7 +104,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
         </div>
 
         {/* Next Button */}
-        <div className="w-full mt-4" style={{ maxWidth: 350 }}>
+        <div className="w-full mt-4" style={{ maxWidth: 390 }}>
           <button
             onClick={onNext}
             className="w-full bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] text-white text-[16px] font-semibold transition-colors"
