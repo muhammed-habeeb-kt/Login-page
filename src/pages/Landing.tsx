@@ -120,16 +120,9 @@ function Screen1({ onNext }: { onNext: () => void }) {
         </div>
       </div>
 
-      {/* Meta Logo Footer — simple icon + HTML text */}
+      {/* Meta Logo Footer */}
       <div className="absolute left-0 right-0 flex justify-center" style={{ bottom: 20 }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
-          <svg viewBox="0 0 36 36" width="20" height="20" fill="#DFE6ED">
-            <path d="M28.18 12.03c-2.43 0-5.46 1.76-7.85 4.39a19.78 19.78 0 0 0-4.66-4.2 8.78 8.78 0 0 0-3.34-1.28c-4.22-.52-8.52 1.63-9.56 5.34-1.12 3.99.78 7.39 4.34 8.24 3.06.74 5.92-.85 8.16-3.23a19.26 19.26 0 0 0 4.97 3.32c1.39.63 2.97 1.05 4.6 1.15 4.19.25 8.27-1.84 9.17-5.59 1.12-4.68-1.57-8.14-5.83-8.14zM15.4 20.31c-1.87 2.15-3.8 3.31-5.77 2.84-2.18-.53-3.09-2.77-2.39-5.27.76-2.7 3.66-3.79 5.86-3.4 1.13.2 2.21 1.01 3.51 2.33a18.25 18.25 0 0 1-1.21 3.5zm13.68 1.1c-.68 2.87-3.35 4.33-6.17 4.16-2.03-.12-4.14-1.17-6-2.82.91-1.37 1.7-2.8 2.23-4.12 2-2.17 4.16-3.39 6.07-3.39 2.93 0 4.75 2.11 3.87 6.17z" />
-          </svg>
-          <span style={{ fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", fontSize: 16, fontWeight: 600, color: '#DFE6ED' }}>
-            Meta
-          </span>
-        </div>
+        <img src="/u_xNYOOVfQm.webp" alt="Meta" style={{ height: 15, objectFit: 'contain' }} />
       </div>
     </>
   );
