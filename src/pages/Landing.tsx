@@ -104,11 +104,11 @@ function Screen1({ onNext }: { onNext: () => void }) {
         </div>
 
         {/* Next Button */}
-        <div className="w-full mt-4" style={{ maxWidth: 390 }}>
+        <div className="w-full" style={{ maxWidth: 390, marginTop: 11 }}>
           <button
             onClick={onNext}
-            className="w-full bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] text-white text-[16px] font-semibold transition-colors"
-            style={{ height: 65, borderRadius: 26, fontFamily: FONT }}
+            className="w-full bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] text-white text-[16px] font-semibold transition-colors flex items-center justify-center"
+            style={{ height: 44, borderRadius: 9999, fontFamily: FONT }}
           >
             Next
           </button>
