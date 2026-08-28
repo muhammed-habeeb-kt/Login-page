@@ -74,7 +74,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
             height: 60,
             borderRadius: 14,
             marginTop: 15,
-            marginBottom: 120,
+            marginBottom: 100,
             objectFit: 'cover',
           }}
         />
