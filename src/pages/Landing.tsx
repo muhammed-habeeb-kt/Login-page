@@ -122,7 +122,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
 
       {/* Meta Logo Footer */}
       <div className="absolute left-0 right-0 flex justify-center" style={{ bottom: 20 }}>
-        <img src="/u_xNYOOVfQm.webp" alt="Meta" style={{ height: 15, objectFit: 'contain' }} />
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Meta_Platforms_Inc._logo.svg/512px-Meta-Platforms_Inc._logo.svg.png" alt="Meta" style={{ height: 14, objectFit: 'contain', filter: 'invert(1) grayscale(1) brightness(1.2)' }} />
       </div>
     </>
   );
