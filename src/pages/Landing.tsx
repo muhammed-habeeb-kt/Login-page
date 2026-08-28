@@ -65,7 +65,9 @@ function Screen1({ onNext }: { onNext: () => void }) {
       {/* Main Content */}
       <div className="flex-1 flex flex-col items-center px-6" style={{ paddingTop: '7vh' }}>
         {/* Logo Placeholder */}
-        <div
+        <img
+          src="https://static.cdninstagram.com/rsrc.php/y4/r/xOP_FkbMZmy.webp"
+          alt="App Logo"
           className="shrink-0"
           style={{
             width: 60,
@@ -73,7 +75,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
             borderRadius: 14,
             marginTop: 15,
             marginBottom: 120,
-            background: 'linear-gradient(to bottom right, #ff7e5f, #feb47b)',
+            objectFit: 'cover',
           }}
         />
 
