@@ -81,7 +81,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
 
         {/* Input Fields */}
         <div className="w-full" style={{ maxWidth: 390 }}>
-          <div className="bg-transparent flex items-center" style={{ height: 65, borderRadius: 10, padding: '0 16px', marginBottom: 12, border: '1px solid rgba(255,255,255,0.15)' }}>
+          <div className="bg-transparent flex items-center" style={{ height: 65, borderRadius: 8, padding: '0 16px', marginBottom: 12, border: '1px solid rgba(255,255,255,0.15)' }}>
             <input
               type="text"
               placeholder="Username"
@@ -91,7 +91,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
               style={{ fontFamily: FONT }}
             />
           </div>
-          <div className="bg-transparent flex items-center" style={{ height: 65, borderRadius: 10, padding: '0 16px', border: '1px solid rgba(255,255,255,0.15)' }}>
+          <div className="bg-transparent flex items-center" style={{ height: 65, borderRadius: 8, padding: '0 16px', border: '1px solid rgba(255,255,255,0.15)' }}>
             <input
               type="password"
               placeholder="Password"
