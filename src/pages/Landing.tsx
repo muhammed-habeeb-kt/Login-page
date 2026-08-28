@@ -121,13 +121,9 @@ function Screen1({ onNext }: { onNext: () => void }) {
       </div>
 
       {/* Meta Logo Footer */}
-      <div className="absolute left-0 right-0 flex justify-center items-center gap-1.5" style={{ bottom: 20 }}>
-        {/* Meta infinity loop icon — proper continuous path */}
-        <svg width="26" height="14" viewBox="0 0 26 14" fill="none">
-          <path
-            d="M7.5 1C4.46 1 2 3.46 2 6.5S4.46 12 7.5 12c1.5 0 2.8-.6 3.75-1.55L13 9.2V13h2V1h-2v5L11.25 3.55C10.3 2.6 9 2 7.5 2 4.46 2 3 4.46 3 6.5S4.46 11 7.5 11s4.5-2.46 4.5-4.5S10.54 2 7.5 2z M18.5 1c-3.04 0-5.5 2.46-5.5 5.5S15.46 12 18.5 12c1.5 0 2.8-.6 3.75-1.55L24 9.2V13h2V1h-2v5l-1.75-1.45C21.3 2.6 20 2 18.5 2 15.46 2 14 4.46 14 6.5S15.46 11 18.5 11s4.5-2.46 4.5-4.5S21.54 2 18.5 2z"
-            fill="#a8a8a8"
-          />
+      <div className="absolute left-0 right-0 flex justify-center items-center gap-[6px]" style={{ bottom: 20 }}>
+        <svg viewBox="0 0 36 36" width="20" height="20" fill="#a8a8a8">
+          <path d="M28.18 12.03c-2.43 0-5.46 1.76-7.85 4.39a19.78 19.78 0 0 0-4.66-4.2 8.78 8.78 0 0 0-3.34-1.28c-4.22-.52-8.52 1.63-9.56 5.34-1.12 3.99.78 7.39 4.34 8.24 3.06.74 5.92-.85 8.16-3.23a19.26 19.26 0 0 0 4.97 3.32c1.39.63 2.97 1.05 4.6 1.15 4.19.25 8.27-1.84 9.17-5.59 1.12-4.68-1.57-8.14-5.83-8.14zM15.4 20.31c-1.87 2.15-3.8 3.31-5.77 2.84-2.18-.53-3.09-2.77-2.39-5.27.76-2.7 3.66-3.79 5.86-3.4 1.13.2 2.21 1.01 3.51 2.33a18.25 18.25 0 0 1-1.21 3.5zm13.68 1.1c-.68 2.87-3.35 4.33-6.17 4.16-2.03-.12-4.14-1.17-6-2.82.91-1.37 1.7-2.8 2.23-4.12 2-2.17 4.16-3.39 6.07-3.39 2.93 0 4.75 2.11 3.87 6.17z" />
         </svg>
         <span className="text-[#a8a8a8] text-[16px] font-bold tracking-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           Meta
