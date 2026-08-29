@@ -63,7 +63,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center px-4" style={{ paddingTop: '4vh' }}>
+      <div className="flex-1 flex flex-col items-center px-4" style={{ paddingTop: '7vh' }}>
         {/* Logo Placeholder */}
         <img
           src="https://static.cdninstagram.com/rsrc.php/y4/r/xOP_FkbMZmy.webp"
