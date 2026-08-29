@@ -57,7 +57,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
         </button>
         <div className="absolute inset-0 flex items-center justify-center pr-8">
           <span className="text-[#a8a8a8] text-[14px]" style={{ fontFamily: FONT }}>
-            English (India) ⌄
+            English (US)
           </span>
         </div>
       </div>
@@ -117,7 +117,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
         {/* Forgotten Password Link */}
         <div className="flex justify-center" style={{ marginTop: 16 }}>
           <button className="text-white text-[15px] font-medium" style={{ fontFamily: FONT }}>
-            Forgotten password?
+            Forgot password?
           </button>
         </div>
       </div>
