@@ -88,7 +88,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="w-full bg-transparent text-white text-[15px] outline-none placeholder:text-[#a8a8a8]"
-              style={{ fontFamily: FONT, marginTop: -8 }}
+              style={{ fontFamily: FONT, marginTop: -11 }}
             />
           </div>
           <div className="bg-transparent flex items-center" style={{ height: 65, borderRadius: 20, padding: '0 16px', border: '1px solid rgba(255,255,255,0.15)' }}>
