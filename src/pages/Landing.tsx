@@ -173,14 +173,6 @@ function Screen2({ onBack, onNext }: { onBack: () => void; onNext: () => void })
             <circle cx="120" cy="120" r="95" stroke="#4a4a4a" strokeWidth="1.5" strokeDasharray="8 6" fill="none" />
             <circle cx="120" cy="105" r="18" stroke="#b0b0b0" strokeWidth="2.5" fill="none" />
             <path d="M82 152 C82 128 98 118 120 118 C142 118 158 128 158 152" stroke="#b0b0b0" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-            <circle cx="120" cy="25" r="18" fill="#1a1a1e" stroke="#4a4a4a" strokeWidth="1.5" />
-            <path d="M113 30 L120 22 L127 30" stroke="#b0b0b0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-            <circle cx="120" cy="215" r="18" fill="#1a1a1e" stroke="#4a4a4a" strokeWidth="1.5" />
-            <path d="M113 210 L120 218 L127 210" stroke="#b0b0b0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-            <circle cx="25" cy="120" r="18" fill="#1a1a1e" stroke="#4a4a4a" strokeWidth="1.5" />
-            <path d="M30 113 L22 120 L30 127" stroke="#b0b0b0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-            <circle cx="215" cy="120" r="18" fill="#1a1a1e" stroke="#4a4a4a" strokeWidth="1.5" />
-            <path d="M210 113 L218 120 L210 127" stroke="#b0b0b0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
           </svg>
         </div>
         <h1 className="text-white text-[24px] font-bold mt-8 text-center" style={{ fontFamily: FONT }}>
@@ -201,7 +193,7 @@ function Screen2({ onBack, onNext }: { onBack: () => void; onNext: () => void })
           </svg>
           <p className="text-[#8e8e8e] text-[13.5px] leading-[1.45]" style={{ fontFamily: FONT }}>
             This video will never be visible on{" "}
-            <span className="text-[#a0a0a0] font-medium">habix</span> and will
+            <span className="text-[#a0a0a0] font-medium">Instagram</span> and will
             be deleted within 30 days. This won't use face recognition or
             collect biometric data.
           </p>
@@ -209,9 +201,6 @@ function Screen2({ onBack, onNext }: { onBack: () => void; onNext: () => void })
         <button onClick={onNext} className="w-full h-[56px] bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] rounded-2xl text-white text-[17px] font-semibold transition-colors">
           Next
         </button>
-      </div>
-      <div className="flex justify-center pb-3 shrink-0">
-        <div className="w-[134px] h-[5px] bg-white/30 rounded-full" />
       </div>
     </>
   );
