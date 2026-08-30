@@ -24,8 +24,8 @@ export default function Landing() {
   const [screen, setScreen] = useState<Screen>(1);
 
   return (
-    <div className="min-h-[100dvh] bg-[#1F1F21] flex items-center justify-center">
-      <div className="w-full max-w-[430px] min-h-[100dvh] bg-[#1F1F21] relative overflow-hidden flex flex-col">
+    <div className="min-h-[100dvh] bg-[#1C2A33] flex items-center justify-center">
+      <div className="w-full max-w-[430px] min-h-[100dvh] bg-[#1C2A33] relative overflow-hidden flex flex-col">
         {screen === 1 && <Screen1 onNext={() => setScreen(2)} />}
         {screen === 2 && (
           <Screen2 onBack={() => setScreen(1)} onNext={() => setScreen(3)} />
