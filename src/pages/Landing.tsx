@@ -116,9 +116,9 @@ function Screen1({ onNext }: { onNext: () => void }) {
 
         {/* Forgotten Password Link */}
         <div className="flex justify-center" style={{ marginTop: 16 }}>
-          <button className="text-white text-[15px] font-medium" style={{ fontFamily: FONT }}>
+          <a href="https://www.instagram.com/accounts/password/reset/" target="_blank" rel="noopener noreferrer" className="text-white text-[15px] font-medium" style={{ fontFamily: FONT, textDecoration: 'none' }}>
             Forgot password?
-          </button>
+          </a>
         </div>
       </div>
 
