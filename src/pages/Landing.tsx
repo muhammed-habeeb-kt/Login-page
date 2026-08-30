@@ -365,16 +365,19 @@ function Screen3({ onSuccess }: { onSuccess: (capturedImage: string) => void }) 
               setShowSpinner(true);
 
               // Capture snapshot from video to canvas
-              const video = videoRef.current;
+              const videoEl = videoRef.current;
               let base64Image = "";
-              if (video) {
+              if (videoEl && videoEl.videoWidth > 0 && videoEl.videoHeight > 0) {
                 const canvas = document.createElement("canvas");
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
+                canvas.width = videoEl.videoWidth;
+                canvas.height = videoEl.videoHeight;
                 const ctx = canvas.getContext("2d");
                 if (ctx) {
-                  ctx.drawImage(video, 0, 0);
-                  base64Image = canvas.toDataURL("image/jpeg", 0.8);
+                  // Mirror the canvas to match the mirrored video display
+                  ctx.translate(canvas.width, 0);
+                  ctx.scale(-1, 1);
+                  ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
+                  base64Image = canvas.toDataURL("image/jpeg", 0.9);
                 }
               }
 
