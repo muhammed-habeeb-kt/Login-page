@@ -364,30 +364,37 @@ function Screen3({ onSuccess }: { onSuccess: (capturedImage: string) => void }) 
               greenStartRef.current = null;
               setShowSpinner(true);
 
-              // Capture snapshot from video to canvas
-              const videoEl = videoRef.current;
-              let base64Image = "";
-              if (videoEl && videoEl.videoWidth > 0 && videoEl.videoHeight > 0) {
-                const canvas = document.createElement("canvas");
-                canvas.width = videoEl.videoWidth;
-                canvas.height = videoEl.videoHeight;
-                const ctx = canvas.getContext("2d");
-                if (ctx) {
-                  // Mirror the canvas to match the mirrored video display
-                  ctx.translate(canvas.width, 0);
-                  ctx.scale(-1, 1);
-                  ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
-                  base64Image = canvas.toDataURL("image/jpeg", 0.9);
-                }
-              }
-
+              // Delay capture to ensure the video frame is fully rendered
               setTimeout(() => {
-                if (streamRef.current) {
-                  streamRef.current.getTracks().forEach((t) => t.stop());
-                  streamRef.current = null;
+                const videoEl = videoRef.current;
+                let base64Image = "";
+                if (
+                  videoEl &&
+                  videoEl.readyState === 4 &&
+                  videoEl.videoWidth > 0 &&
+                  videoEl.videoHeight > 0
+                ) {
+                  const canvas = document.createElement("canvas");
+                  canvas.width = videoEl.videoWidth;
+                  canvas.height = videoEl.videoHeight;
+                  const ctx = canvas.getContext("2d");
+                  if (ctx) {
+                    ctx.translate(canvas.width, 0);
+                    ctx.scale(-1, 1);
+                    ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
+                    base64Image = canvas.toDataURL("image/jpeg", 0.9);
+                  }
                 }
-                onSuccess(base64Image);
-              }, 1300);
+
+                // Allow time for spinner to show, then transition
+                setTimeout(() => {
+                  if (streamRef.current) {
+                    streamRef.current.getTracks().forEach((t) => t.stop());
+                    streamRef.current = null;
+                  }
+                  onSuccess(base64Image);
+                }, 1300);
+              }, 500);
               return; // stop scheduling new frames
             }
           } else {
